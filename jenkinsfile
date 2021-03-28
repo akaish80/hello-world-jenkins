@@ -3,7 +3,7 @@ def projectGitRepo="https://github.com/akaish80/hello-world-jenkins"
 
 pipeline {
 
-    agent none
+ agent { node { label 'master' } }
     
     stages {
 
