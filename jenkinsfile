@@ -6,13 +6,14 @@ pipeline {
 
     stages {
 
-        stage('Cloning Git') {
-           sh 'rm -Rf /opts/temp'
+        stage("Cloning Git") {
+           sh "rm -Rf /opts/temp"
 
-            sh 'npm --version'
-           echo '${env.BRANCH}'
-           step([$class: 'WsCleanup'])
-           checkout([$class: 'GitSCM', branches: [[name: "*/${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'fbb51250db9df3680219ae3e15d3e7b783a98ad3', url: "${projectGitRepo}"]]])       
+            sh "npm --version"
+            echo "Arun -??? "
+           echo "${env.BRANCH}"
+           step([$class: "WsCleanup"])
+           checkout([$class: "GitSCM", branches: [[name: "*/${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "fbb51250db9df3680219ae3e15d3e7b783a98ad3", url: "${projectGitRepo}"]]])       
        } 
 
          stage("Creating the version number") {
@@ -32,8 +33,8 @@ pipeline {
                 script {
 
                   echo "***************installing the packings & building the package ***************"
-                    nodejs('Node-14.2.0_With_Yarn') {
-                        sh 'npm install'
+                    nodejs("Node-14.2.0_With_Yarn") {
+                        sh "npm install"
                    }
                 }
             }
