@@ -7,6 +7,8 @@ pipeline {
     stages {
 
         stage("Cloning Git") {
+            
+            steps {
            sh "rm -Rf /opts/temp"
 
             sh "npm --version"
@@ -14,6 +16,7 @@ pipeline {
            echo "${env.BRANCH}"
            step([$class: "WsCleanup"])
            checkout([$class: "GitSCM", branches: [[name: "*/${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "fbb51250db9df3680219ae3e15d3e7b783a98ad3", url: "${projectGitRepo}"]]])       
+            }
        } 
 
          stage("Creating the version number") {
