@@ -19,12 +19,24 @@ pipeline {
             steps {
                 script {
                     echo "***************Creating the version number***************"
+                    env_APPL_BUILD_NUMBER="${env.BUILD_ID}-${env.BUILD_TIMESTAMP}"
+                    echo "${env_APPL_BUILD_NUMBER}"
+                    
+                    sh "echo ${getCommitId()}-${env_APPL_BUILD_NUMBER} >> ./.version"
                 }
             }
          }
 
-         stage("Testing Arun") {
-             echo 'Hellow Arun'
-         }
+        stage("installing the packings & building the package") {
+            steps {
+                script {
+
+                  echo "***************installing the packings & building the package ***************"
+                    nodejs('Node-14.2.0_With_Yarn') {
+                        sh 'npm install'
+                   }
+                }
+            }
+          }
     }
 }
