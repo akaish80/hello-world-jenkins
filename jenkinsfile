@@ -16,7 +16,7 @@ pipeline {
             echo "Arun -??? "
            echo "${env.BRANCH}"
            step([$class: "WsCleanup"])
-           checkout([$class: "GitSCM", branches: [[name: "*/${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "fbb51250db9df3680219ae3e15d3e7b783a98ad3", url: "${projectGitRepo}"]]])       
+           checkout([$class: "GitSCM", branches: [[name: "*/${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "7a1218fd05f5253b3856a32e48f656c75f9c7227", url: "${projectGitRepo}"]]])       
             }
        } 
 
