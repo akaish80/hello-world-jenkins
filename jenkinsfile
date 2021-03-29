@@ -12,7 +12,7 @@ pipeline {
             steps {
            sh "rm -Rf /opts/temp"
 
-            sh "npm --version"
+            
             echo "Arun -??? "
            echo "${env.BRANCH}"
            step([$class: "WsCleanup"])
@@ -38,6 +38,7 @@ pipeline {
 
                   echo "***************installing the packings & building the package ***************"
                     nodejs("Node-14.2.0_With_Yarn") {
+                        sh "npm --version"
                         sh "npm install"
                    }
                 }
