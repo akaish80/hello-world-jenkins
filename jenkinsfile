@@ -15,7 +15,7 @@ pipeline {
            step([$class: "WsCleanup"])
             // Clean before build
             // cleanWs()
-           checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "1733770445308780590784b7bbf76cc4dd6c7e57", url: "${projectGitRepo}"]]])       
+           checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "a8165de6598cb4a83aa7db23292c679eef5e2073", url: "${projectGitRepo}"]]])       
             }
        } 
 
