@@ -6,6 +6,7 @@ def prod_bucket = "my.helloworld.com"
 def devOpsRepository="helloworld-ops-repository"
 def devOpsRepoVersion="helloworld-ops-repo-versions"
 def ENV_TO_DEPLOY = "prod"
+def appl_version = "0.0.0.1"
 
 pipeline {
 
@@ -73,7 +74,7 @@ pipeline {
                     zip zipFile: "./temp/${projectName}.zip", dir: "build/"
                     echo "***************Pushing the build to S3 ***************"
                      withAWS(credentials: 'devops-service-user') {
-                        sh "aws s3 cp './temp/${projectName}.zip' s3://${devOpsRepository}/${projectName}/${projectName}-${0.0.0.1}.zip"
+                        sh "aws s3 cp './temp/${projectName}.zip' s3://${devOpsRepository}/${projectName}/${projectName}-${appl_version}.zip"
                      }
                     echo "***************Pushing the build to S3 ***************----------"
            
