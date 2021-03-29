@@ -12,11 +12,10 @@ pipeline {
             steps {
            sh "rm -Rf /opts/temp"
 
-            
-            echo "Arun -??? "
-           echo "${env.BRANCH}"
            step([$class: "WsCleanup"])
-           checkout([$class: "GitSCM", branches: [[name: "*/${params.BRANCH}"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "7a1218fd05f5253b3856a32e48f656c75f9c7227", url: "${projectGitRepo}"]]])       
+            // Clean before build
+            cleanWs()
+           checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "7a1218fd05f5253b3856a32e48f656c75f9c7227", url: "${projectGitRepo}"]]])       
             }
        } 
 
