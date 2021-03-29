@@ -4,7 +4,6 @@ def projectGitRepo="https://github.com/akaish80/hello-world-jenkins"
 pipeline {
 
  agent { node { label 'master' } }
- tools {nodejs "nodejs"}
     
     stages {
 
