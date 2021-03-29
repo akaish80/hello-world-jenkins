@@ -19,10 +19,10 @@ pipeline {
             steps {
            sh "rm -Rf /opts/temp"
 
-           step([$class: "WsCleanup"])
+        //    step([$class: "WsCleanup"])
             // Clean before build
             // cleanWs()
-           checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "6f30bb5cdb9c64b84fdad4348e8d8085197c7d93", url: "${projectGitRepo}"]]])       
+           checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "109ea32406c4d66aa939947d9a87c28e944c307e", url: "${projectGitRepo}"]]])       
             }
        } 
 
