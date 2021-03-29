@@ -45,3 +45,11 @@ pipeline {
           }
     }
 }
+
+def getCommitId() {
+    sh 'git rev-parse HEAD > .git/commitId'
+    def commitId = readFile ('.git/commitId').trim()
+    sh 'rm .git/commitId'
+    echo "commitid is :${commitId}"
+    commitId
+}
