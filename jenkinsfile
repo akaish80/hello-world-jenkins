@@ -58,8 +58,8 @@ pipeline {
                 script {
                     withAWS(credentials: 'dev-ops-user') {
                         sh "aws s3 rm s3://${prod_s3ApplicationBucket}/ --recursive"
-                    sh "aws s3 cp build/ s3://${prod_s3ApplicationBucket}/ --acl bucket-owner-full-control --recursive"
-                    sh "aws cloudfront create-invalidation --distribution-id ${prod_cloudfrontID} --paths '/*'"
+                        sh "aws s3 cp build/ s3://${prod_s3ApplicationBucket}/ --acl bucket-owner-full-control --recursive"
+                        sh "aws cloudfront create-invalidation --distribution-id ${prod_cloudfrontID} --paths '/*'"
                     }
                 }
             }
@@ -81,23 +81,23 @@ pipeline {
                  }
             }
 
-             stage("Updating Version Repo") {
-           
-            steps {
+        }
+            stage("Updating Version Repo") {
+            
+                steps {
 
-                script {
-                    sh "echo master- ${getCommitId()}-${env_APPL_BUILD_NUMBER} >> ./temp/${projectName}-${ENV_TO_DEPLOY}.txt"
-                     withAWS(credentials: 'devops-service-user') {
-                        sh "aws s3 cp './temp/${projectName}-${ENV_TO_DEPLOY}.txt' s3://${devOpsRepoVersion}/${projectName}-${ENV_TO_DEPLOY}.txt"
-                     }
-                 }
-                  
-                 
+                    script {
+                        sh "echo master- ${getCommitId()}-${env_APPL_BUILD_NUMBER} >> ./temp/${projectName}-${ENV_TO_DEPLOY}.txt"
+                        withAWS(credentials: 'devops-service-user') {
+                            sh "aws s3 cp './temp/${projectName}-${ENV_TO_DEPLOY}.txt' s3://${devOpsRepoVersion}/${projectName}-${ENV_TO_DEPLOY}.txt"
+                        }
+                    }
+                    
+                    
+                }
+
+                            
             }
-
-                        
-        }
-        }
     }
 }
 
