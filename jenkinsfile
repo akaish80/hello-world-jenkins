@@ -17,12 +17,12 @@ pipeline {
         stage("Cloning Git") {
             
             steps {
-           sh "rm -Rf /opts/temp"
+                sh "rm -Rf /opts/temp"
 
-        //    step([$class: "WsCleanup"])
+                step([$class: "WsCleanup"])
             // Clean before build
             // cleanWs()
-           checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "109ea32406c4d66aa939947d9a87c28e944c307e", url: "${projectGitRepo}"]]])       
+                checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "03f431b134e352e7d03a3856ab25fe772f05415f", url: "${projectGitRepo}"]]])       
             }
        } 
 
