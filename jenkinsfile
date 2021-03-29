@@ -2,6 +2,7 @@
 def projectGitRepo="https://github.com/akaish80/hello-world-jenkins"
 def projectName = 'helloworld'
 def prod_bucket = "my.helloworld.com"
+def prod_s3ApplicationBucket = "my.helloworld.com"
 
 def devOpsRepository="helloworld-ops-repository"
 def devOpsRepoVersion="helloworld-ops-repo-versions"
@@ -22,7 +23,7 @@ pipeline {
                 step([$class: "WsCleanup"])
             // Clean before build
             // cleanWs()
-                checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "03f431b134e352e7d03a3856ab25fe772f05415f", url: "${projectGitRepo}"]]])       
+                checkout([$class: "GitSCM", branches: [[name: "*/master"]], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: "ccf0b0aceeb68968891177519f1e0e18b2a3fafe", url: "${projectGitRepo}"]]])       
             }
        } 
 
