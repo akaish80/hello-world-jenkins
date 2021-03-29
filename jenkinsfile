@@ -1,5 +1,11 @@
 
 def projectGitRepo="https://github.com/akaish80/hello-world-jenkins"
+def projectName = 'helloworld'
+def prod_bucket = "my.helloworld.com"
+
+def devOpsRepository="helloworld-ops-repository"
+def devOpsRepoVersion="helloworld-ops-repo-versions"
+def ENV_TO_DEPLOY = "prod"
 
 pipeline {
 
@@ -39,10 +45,58 @@ pipeline {
                     nodejs("Node-14.2.0_With_Yarn") {
                         sh "npm --version"
                         sh "npm install"
+                        sh 'npm install babel-upgrade -g'
+                        sh 'babel-upgrade --write'
                    }
                 }
             }
           }
+          stage("Deploying to S3") {
+
+            steps {
+                script {
+                    withAWS(credentials: 'dev-ops-user') {
+                        sh "aws s3 rm s3://${prod_s3ApplicationBucket}/ --recursive"
+                    sh "aws s3 cp build/ s3://${prod_s3ApplicationBucket}/ --acl bucket-owner-full-control --recursive"
+                    sh "aws cloudfront create-invalidation --distribution-id ${prod_cloudfrontID} --paths '/*'"
+                    }
+                }
+            }
+          }
+     
+        stage("Creating zip file & pushing to S3") {
+
+            steps {
+                script {
+                echo "***************Creating zip file ***************"
+                   sh "echo master- ${getCommitId()}-${env_APPL_BUILD_NUMBER} >> build/.version"
+                    zip zipFile: "./temp/${projectName}.zip", dir: "build/"
+                    echo "***************Pushing the build to S3 ***************"
+                     withAWS(credentials: 'devops-service-user') {
+                        sh "aws s3 cp './temp/${projectName}.zip' s3://${devOpsRepository}/${projectName}/${projectName}-${0.0.0.1}.zip"
+                     }
+                    echo "***************Pushing the build to S3 ***************----------"
+           
+                 }
+            }
+
+             stage("Updating Version Repo") {
+           
+            steps {
+
+                script {
+                    sh "echo master- ${getCommitId()}-${env_APPL_BUILD_NUMBER} >> ./temp/${projectName}-${ENV_TO_DEPLOY}.txt"
+                     withAWS(credentials: 'devops-service-user') {
+                        sh "aws s3 cp './temp/${projectName}-${ENV_TO_DEPLOY}.txt' s3://${devOpsRepoVersion}/${projectName}-${ENV_TO_DEPLOY}.txt"
+                     }
+                 }
+                  
+                 
+            }
+
+                        
+        }
+        }
     }
 }
 
